@@ -77,7 +77,6 @@ namespace Employee.UI.Controllers
             var model = new EmployeeDetailViewModel
             {
                 //List = employees.OrderBy(e => e.EmployeeName).ToList(),
-                // List = employees.OrderByDescending(e => e.EmployeeName).ToList(),
                 List = employees.OrderByDescending(e => e.EmployeeName).ToList(),
                 Employee = new Employees()
 
