@@ -19,11 +19,19 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore EmployeeManagement.sln
+    # Try restoring solution if present
+    - name: Restore dependencies (solution)
+      run: dotnet restore ./EmployeeManagement/EmployeeManagement.sln
 
-    - name: Build
-      run: dotnet build EmployeeManagement.sln --no-restore --configuration Release
+    # Fallback: restore UI project directly
+    - name: Restore dependencies (UI project)
+      run: dotnet restore ./Employee.UI/Employee.UI.csproj
 
-    - name: Test
-      run: dotnet test EmployeeManagement.sln --no-build --verbosity normal
+    - name: Build solution
+      run: dotnet build ./EmployeeManagement/EmployeeManagement.sln --no-restore --configuration Release
+
+    - name: Build UI project
+      run: dotnet build ./Employee.UI/Employee.UI.csproj --no-restore --configuration Release
+
+    - name: Test solution
+      run: dotnet test ./EmployeeManagement/EmployeeManagement.sln --no-build --verbosity normal
