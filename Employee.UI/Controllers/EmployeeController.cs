@@ -70,5 +70,17 @@ namespace Employee.UI.Controllers
 
             return View("Index", model);
         }
+        public async Task<IActionResult> Index()
+        {
+            var employees = await _employeeServices.GetEmployeesAsync();
+
+            var model = new EmployeeDetailViewModel
+            {
+                List = employees.OrderBy(e => e.EmployeeName).ToList(),
+                Employee = new Employees()
+            };
+
+            return View(model);
+        }
     }
 }
