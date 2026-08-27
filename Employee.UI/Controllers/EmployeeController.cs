@@ -51,5 +51,24 @@ namespace Employee.UI.Controllers
             };
             return View("Index", model);
         }
+        public async Task<IActionResult> Search(string name)
+        {
+            var employees = await _employeeServices.GetEmployeesAsync();
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                employees = employees
+                    .Where(e => e.EmployeeName.Contains(name, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            var model = new EmployeeDetailViewModel
+            {
+                List = employees,
+                Employee = new Employees()
+            };
+
+            return View("Index", model);
+        }
     }
 }
